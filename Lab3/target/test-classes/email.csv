@@ -1,0 +1,11 @@
+email,expected
+bobmail.com,false
+carol@domain.com,true
+alice@,false
+john.doe@gmail.com,true
+user.name@sub.domain.co,true
+@missingname.com,false
+david123@domain,false
+emma_smith@outlook.com,true
+frank#domain.com,false
+lucy-lee@yahoo.co.uk,true

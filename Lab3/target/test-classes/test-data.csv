@@ -9,3 +9,6 @@ david,short1!,david@mail.com,false
 emma,Password,emma@domain.com,false
 frank,Password1!,frank@,false
 grace,Pass@123,grace@domain.com,true
+,,,false
+john123,Pass123$,alice@example.com,false
+mary_sue,Password1!,john@example.com,false

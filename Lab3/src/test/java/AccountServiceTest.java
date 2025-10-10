@@ -1,47 +1,43 @@
 import huytq.example.AccountService;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AccountServiceTest {
-    private final AccountService service = new AccountService();
+    static AccountService accountService;
 
-    @ParameterizedTest(name = "Test {index}: username={0}, password={1}, email={2} → expected={3}")
-    @CsvFileSource(resources = "/test-data.csv", numLinesToSkip = 1)
-    void testRegisterAccount(String username, String password, String email, boolean expected) {
-        boolean result = service.registerAccount(username, password, email);
-        assertEquals(expected, result,
-                () -> "❌ Failed for input: username=" + username + ", password=" + password + ", email=" + email);
+    @BeforeAll
+    static void initAll(){
+        accountService = new AccountService();
     }
 
+    @AfterAll
+    static void cleanupAll(){
+        accountService = null;
+    }
+
+    @DisplayName("Kiểm tra tính hợp lệ của email")
+    @ParameterizedTest
+    @CsvFileSource(resources = "/email.csv", numLinesToSkip = 1)
+    void testIsValidEmail(String email, Boolean expected){
+        boolean result = accountService.isValidEmail(email);
+        assertEquals(expected, result, () -> email + " should be an " + (expected? "valid" : "invalid") + " email");
+    }
+
+    @DisplayName("Kiểm tra chức năng đăng kí tài khoản")
     @ParameterizedTest
     @CsvFileSource(resources = "/test-data.csv", numLinesToSkip = 1)
-    void testValidEmail(String username, String password, String email, boolean expected) {
-        boolean emailValid = service.isValidEmail(email);
-        if (email.contains("@") && email.contains(".")) {
-            assertTrue(emailValid, "Email should be valid: " + email);
-        } else {
-            assertFalse(emailValid, "Email should be invalid: " + email);
+    void testRegisterAccount(String username, String password, String email, Boolean expectedResult){
+        if(expectedResult){
+            assertTrue(accountService.registerAccount(username, password, email));
+            return;
         }
+        assertThrows(IllegalArgumentException.class, () -> {
+            accountService.registerAccount(username, password, email);
+        });
     }
-
-
-
-
-
-
-//    @Test
-//    @DisplayName("Test duplicate username registration")
-//    void testDuplicateUsername() {
-//        // Lần đầu đăng ký - hợp lệ
-//        boolean firstAttempt = service.registerAccount("john123", "Pass123!", "john@example.com");
-//        assertTrue(firstAttempt, "First registration should succeed");
-//
-//        // Lần thứ hai cùng username - phải bị từ chối
-//        boolean secondAttempt = service.registerAccount("john123", "Pass123!", "john@example.com");
-//        assertFalse(secondAttempt, "Duplicate username should be rejected");
-//    }
 }

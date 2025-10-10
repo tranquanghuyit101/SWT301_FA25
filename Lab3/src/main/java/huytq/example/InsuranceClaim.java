@@ -8,13 +8,6 @@ public class InsuranceClaim {
 
     private static final double PAYOUT_RATE = 0.85;
 
-    /**
-     * Constructor to initialize the insurance claim.
-     *
-     * @param id          Claim ID
-     * @param claimAmount Amount claimed
-     * @throws IllegalArgumentException if amount is zero or negative
-     */
     public InsuranceClaim(String id, double claimAmount) {
         if (id == null || id.isEmpty()) {
             throw new IllegalArgumentException("Claim ID cannot be null or empty");
@@ -29,12 +22,6 @@ public class InsuranceClaim {
 
     }
 
-    /**
-     * Processes the claim by updating its status if currently pending.
-     *
-     * @param statusUpdate New status to apply
-     * @return true if update was applied, false otherwise
-     */
     public boolean processClaim(String statusUpdate) {
         if (statusUpdate == null || statusUpdate.isEmpty()) {
             throw new IllegalArgumentException("Status update cannot be null or empty");
@@ -47,11 +34,6 @@ public class InsuranceClaim {
         return false;
     }
 
-    /**
-     * Calculates payout based on approval.
-     *
-     * @return payout amount or 0 if not approved
-     */
     public double calculatePayout() {
         if ("Approved".equals(this.claimStatus)) {
             return amount * PAYOUT_RATE;
@@ -60,11 +42,6 @@ public class InsuranceClaim {
         }
     }
 
-    /**
-     * Updates the amount of the claim.
-     *
-     * @param newAmount new claim amount
-     */
     public void updateClaimAmount(double newAmount) {
         if (newAmount <= 0) {
             throw new IllegalArgumentException("New amount must be positive.");
