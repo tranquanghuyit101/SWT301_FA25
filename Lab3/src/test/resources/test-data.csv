@@ -1,14 +1,15 @@
 username,password,email,expected
-john123,Pass123!,john@example.com,true
-,Pass123!,john@example.com,false
-al,Password1!,al@mail.com,false
-bob123,password,bobmail.com,false
-carol,Password1!,carol@domain.com,true
-john123,Pass123!,john@example.com,false
-david,short1!,david@mail.com,false
-emma,Password,emma@domain.com,false
-frank,Password1!,frank@,false
-grace,Pass@123,grace@domain.com,true
-,,,false
-john123,Pass123$,alice@example.com,false
-mary_sue,Password1!,john@example.com,false
+john123,Pass123!,john@example.com,true, Registration successful with valid input.
+,Pass123!,john@example.com,false, Registration failed: Username is missing.
+al,Password1!,al@mail.com,false, Registration failed: Username too short (< 4 chars).
+bob123,password,bobmail.com,false, Registration failed: Invalid email format.
+carol,Password1!,carol@domain.com,true, Registration successful with valid credentials.
+john123,Pass123!,john@example.com,false, Registration failed: Duplicate username.
+david,short1!,david@mail.com,false, Registration failed: Password too short (< 7 chars).
+emma,Password,emma@domain.com,false, Registration failed: Password missing number or special character.
+frank,Password1!,frank@,false, Registration failed: Invalid email (incomplete domain).
+grace,Pass@123,grace@domain.com,true, Registration successful: Password meets all complexity rules.
+,,,false, Registration failed: Missing all required fields.
+john123,Pass123$,alice@example.com,false, Registration failed: Duplicate username (john123 already exists).
+mary_sue,Password1!,john@example.com, false, Registration failed: Email already used by another user.
+
