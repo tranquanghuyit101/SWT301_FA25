@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 public class ResourceLeakExample {
 
     private static final Logger logger = Logger.getLogger(ResourceLeakExample.class.getName());
-
     public static void main(String[] args) {
         final String fileName = (args.length > 0) ? args[0] : "data.txt";
         final Path filePath = Paths.get(fileName).toAbsolutePath();
@@ -23,7 +22,7 @@ public class ResourceLeakExample {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                // ✅ Chỉ gọi log khi cấp độ INFO đang bật
+                // Chỉ gọi log khi cấp độ INFO đang bật
                 if (logger.isLoggable(Level.INFO)) {
                     logger.info(String.format("Read line: %s", line));
                 }
